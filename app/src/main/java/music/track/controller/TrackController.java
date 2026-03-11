@@ -1,0 +1,74 @@
+package music.track.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import music.track.dto.TrackRequestDTO;
+import music.track.dto.TrackResponseDTO;
+import music.track.dto.TrackUpdateDTO;
+import music.track.service.TrackService;
+import music.track.domain.Track;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@RestController
+@RequestMapping("/tracks")
+public class TrackController {
+    @Autowired
+    private TrackService trackService;
+
+    @GetMapping("/search")
+    public List<TrackResponseDTO> searchTrack(@RequestParam String keyword) {
+        List<TrackResponseDTO> ret=new ArrayList<>();
+        List<Track> tracks=this.trackService.searchByTitle(keyword);
+        for(Track track:tracks){
+            this.trackService.fromTrack(track);
+        }
+        return ret;
+    }
+
+    @PutMapping("/{trackId}")
+    public TrackResponseDTO updateTrack(
+            @PathVariable String trackId,
+            @RequestBody TrackUpdateDTO updateDTO) {
+
+        return trackService.updateTrack(trackId,updateDTO);
+    }
+
+    @GetMapping("/search")
+    public List<TrackResponseDTO> searchTrackByArtist(@RequestParam String artist) {
+        List<TrackResponseDTO> ret=new ArrayList<>();
+        List<Track> tracks=trackService.getTracksByArtist(artist);
+        for(Track track:tracks){
+            ret.add(trackService.fromTrack(track));
+        }
+        return ret;
+    }
+    
+    @GetMapping("/search")
+    public List<TrackResponseDTO> searchTrackByGenre(@RequestParam String genre) {
+        List<TrackResponseDTO> ret=new ArrayList<>();
+        List<Track> tracks=trackService.getTracksByGenre(genre);
+        for(Track track:tracks){
+            ret.add(trackService.fromTrack(track));
+        }
+        return ret;
+    }
+
+    @PostMapping("/")
+    public TrackResponseDTO createTrack(
+            @RequestBody TrackRequestDTO requestDTO) {
+        Track track=this.trackService.createTrack(requestDTO);
+        return trackService.fromTrack(track);
+    }
+    
+}
