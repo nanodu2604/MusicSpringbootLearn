@@ -37,4 +37,5 @@ public class InMemoryPlaylistRepository implements PlaylistRepository{
     public List<Playlist> playlistBatchRetrieval(List<String> playlistIds){
         return playlistIds.stream().map(this.playlists::get).toList();
     }
+
 }

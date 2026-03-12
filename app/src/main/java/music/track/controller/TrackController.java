@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import music.track.dto.TrackUpdateDTO;
 import music.track.service.TrackService;
 import music.track.domain.Track;
 import org.springframework.web.bind.annotation.PostMapping;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -66,7 +68,7 @@ public class TrackController {
 
     @PostMapping("/")
     public TrackResponseDTO createTrack(
-            @RequestBody TrackRequestDTO requestDTO) {
+            @Valid @RequestBody TrackRequestDTO requestDTO) {
         Track track=this.trackService.createTrack(requestDTO);
         return trackService.fromTrack(track);
     }

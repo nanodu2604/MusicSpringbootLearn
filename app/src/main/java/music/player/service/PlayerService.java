@@ -8,6 +8,8 @@ import music.player.repository.PlayerRepository;
 import music.track.domain.Track;
 import music.track.service.TrackService;
 
+import music.player.exception.PlayerNotFoundException;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +37,13 @@ public class PlayerService {
     }
     //
 
-    //this for the testing only
+    //this testing and controller GET only
     public PlayerState getPlayerState(String userId){
-        return this.playerRepository.getPlayerStateById(userId);
+        PlayerState player=this.playerRepository.getPlayerStateById(userId);
+        if(player==null){
+            throw new PlayerNotFoundException(userId);
+        }
+        return player;
     }
     //
 
@@ -220,9 +226,8 @@ public class PlayerService {
 
     //load playlist
     public PlayerState loadPlaylist(String urserId,String playlistId) {
-        //Borrow playlist service
         PlayerState state=this.playerRepository.getPlayerStateById(urserId);
-        List<String> trackIds=new ArrayList<>(playlistService.loadTrackIds(playlistId));
+        List<String> trackIds=new ArrayList<>(playlistService.loadTrackIds(playlistId));//Borrow playlist service
         state.setPlaylistId(playlistId);
         state.setTrackIds(trackIds);
         state.setCurrentTrackIndex(0);

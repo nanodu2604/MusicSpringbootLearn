@@ -1,6 +1,7 @@
 package music.playlist.service;
 
 import music.playlist.domain.Playlist;
+import music.playlist.exception.PlaylistNotFoundException;
 import music.playlist.repository.PlaylistRepository;
 
 import java.util.HashSet;
@@ -35,12 +36,15 @@ public class PlaylistService{
     }
 
     public Playlist getPlaylistById(String playlistId){
-        return this.playlistRepository.getPlaylistById(playlistId);
+        Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
+        if(playlist==null){
+            throw new PlaylistNotFoundException(playlistId);
+        }
+        return playlist;
     }
 
     public void renamePlaylist(String playlistId,String newName){
         Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
-        if(playlist==null) return;
         playlist.setPlaylistName(newName);
         this.playlistRepository.savePlaylist(playlist);
     } 
@@ -52,7 +56,6 @@ public class PlaylistService{
     //Track functions
     public void addTrack(String playlistId, String trackId){
         Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
-        if(playlist==null) return;
         HashSet<String> trackIds=playlist.getTrackIds();
         trackIds.add(trackId);
         playlist.setTrackIds(trackIds);
@@ -61,7 +64,6 @@ public class PlaylistService{
 
     public void removeTrack(String playlistId,String trackId){
         Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
-        if(playlist==null) return;
         HashSet<String> trackIds=playlist.getTrackIds();
         trackIds.remove(trackId);
         playlist.setTrackIds(trackIds);
@@ -70,7 +72,6 @@ public class PlaylistService{
 
     public HashSet<String> loadTrackIds(String playlistId){
         Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
-        if(playlist==null) return null;
         return playlist.getTrackIds();
     }
 

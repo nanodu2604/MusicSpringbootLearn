@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class TrackRequestDTO {
     private String genre;
     private String artist;
+    @NotBlank
     private String trackTitle;
     private int duration;
     private LocalDate releaseDate;

@@ -6,6 +6,8 @@ import music.track.dto.TrackUpdateDTO;
 import music.track.dto.TrackRequestDTO;
 import music.track.repository.SearchTrackRepository;
 import music.track.repository.TrackRepository;
+import music.track.exception.SearchTrackNotFoundException;
+import music.track.exception.TrackNotFoundException;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -101,8 +103,10 @@ public class TrackService {
     //Search engine
     public List<Track> searchByTitle(String keyword){
         List<String> ids=this.searchTrackRepository.searchTitle(keyword);
+        if(ids==null || ids.size()==0){
+            throw new SearchTrackNotFoundException(String.format("Your keyword %s not found", keyword));
+        }
         return this.trackRepository.trackBatchRetrieval(ids);
-                    
     }
 
     public List<Track> getTracksByArtist(String artist){
@@ -113,7 +117,11 @@ public class TrackService {
         return this.trackRepository.getTracksByGenre(genre);
     }
     public Track getTrackById(String trackId) {
-        return this.trackRepository.getTrackById(trackId);
+        Track track=this.trackRepository.getTrackById(trackId);
+        if(track==null){
+            throw new TrackNotFoundException(trackId);
+        }
+        return track;
     }
     
     //EXTENSION: Page<Track> search(TrackSearchCriteria criteria);
