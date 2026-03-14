@@ -8,7 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '4.0.3'
 }
 apply plugin: 'io.spring.dependency-management'
 
@@ -29,8 +29,7 @@ dependencies {
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework:spring-web' // Example for the web module
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.0'
-    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import music.track.domain.Track;
 
-@Repository("memorySRepo")
+@Repository("memorySearchTrackRepo")
 public class InMemorySearchTrackRepository implements SearchTrackRepository{
     private Map<String, Set<String>> titleIndex = new HashMap<>(); 
 

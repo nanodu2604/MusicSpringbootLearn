@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-@Repository("memoryRepo")
+@Repository("memoryPlayerRepo")
 public class InMemoryPlayerRepository implements PlayerRepository{
     private final Map<String,PlayerState> players=new HashMap<>();
     @Override

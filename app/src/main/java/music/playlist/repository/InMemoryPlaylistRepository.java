@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-@Repository("memoryRepo")
+@Repository("memoryPlaylistRepo")
 public class InMemoryPlaylistRepository implements PlaylistRepository{
     private Map<String,Playlist> playlists=new HashMap<>();
 

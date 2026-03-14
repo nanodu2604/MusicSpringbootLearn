@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import jakarta.validation.Valid;
 
 import music.track.dto.TrackRequestDTO;
 import music.track.dto.TrackResponseDTO;
 import music.track.dto.TrackUpdateDTO;
 import music.track.service.TrackService;
 import music.track.domain.Track;
-import org.springframework.web.bind.annotation.PostMapping;
-import jakarta.validation.Valid;
 
 
+@Validated
 @RestController
 @RequestMapping("/tracks")
 public class TrackController {
@@ -41,12 +42,12 @@ public class TrackController {
     @PutMapping("/{trackId}")
     public TrackResponseDTO updateTrack(
             @PathVariable String trackId,
-            @RequestBody TrackUpdateDTO updateDTO) {
+            @Valid @RequestBody TrackUpdateDTO updateDTO) {
 
         return trackService.updateTrack(trackId,updateDTO);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/artist")
     public List<TrackResponseDTO> searchTrackByArtist(@RequestParam String artist) {
         List<TrackResponseDTO> ret=new ArrayList<>();
         List<Track> tracks=trackService.getTracksByArtist(artist);
@@ -56,7 +57,7 @@ public class TrackController {
         return ret;
     }
     
-    @GetMapping("/search")
+    @GetMapping("/search/genre")
     public List<TrackResponseDTO> searchTrackByGenre(@RequestParam String genre) {
         List<TrackResponseDTO> ret=new ArrayList<>();
         List<Track> tracks=trackService.getTracksByGenre(genre);
@@ -68,7 +69,7 @@ public class TrackController {
 
     @PostMapping("/")
     public TrackResponseDTO createTrack(
-            @Valid @RequestBody TrackRequestDTO requestDTO) {
+        @Valid @RequestBody TrackRequestDTO requestDTO) {
         Track track=this.trackService.createTrack(requestDTO);
         return trackService.fromTrack(track);
     }

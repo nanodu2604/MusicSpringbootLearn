@@ -2,12 +2,23 @@ package music.track.dto;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Past;
+
 public class TrackRequestDTO {
     private String genre;
+
+    @NotBlank(message = "Artist must not be empty")
     private String artist;
-    @NotBlank
+
+    @NotBlank(message = "title cannot be empty")
     private String trackTitle;
+
+    @Positive(message="There is no way duration is not 0")
     private int duration;
+
+    @Past(message="The date must be in the past")
     private LocalDate releaseDate;
     
     public String getGenre(){

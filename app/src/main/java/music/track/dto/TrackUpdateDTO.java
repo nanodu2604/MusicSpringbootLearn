@@ -2,10 +2,13 @@ package music.track.dto;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Positive;
+
 public class TrackUpdateDTO {
     private String title;
     private String artist;
     private String genre;
+    @Positive(message = "The duration must be positive")
     private Integer duration;
     private LocalDate releaseDate;
     

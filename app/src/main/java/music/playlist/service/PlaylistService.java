@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlaylistService{
     private final PlaylistRepository playlistRepository;
-    public PlaylistService(@Qualifier("memoryRepo") PlaylistRepository playlistRepository ){
+    public PlaylistService(@Qualifier("memoryPlaylistRepo") PlaylistRepository playlistRepository ){
         this.playlistRepository=playlistRepository;
     }
     //CRUD methods

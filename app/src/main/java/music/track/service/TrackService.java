@@ -15,12 +15,15 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+@Service
 public class TrackService {
     private final SearchTrackRepository searchTrackRepository;
     private final TrackRepository trackRepository;
     
-    public TrackService(@Qualifier("memoRepo") TrackRepository trackRepository,
-    @Qualifier("memoSRepo") SearchTrackRepository searchTrackRepository){
+    public TrackService(@Qualifier("memoryTrackRepo") TrackRepository trackRepository,
+    @Qualifier("memorySearchTrackRepo") SearchTrackRepository searchTrackRepository){
         this.trackRepository=trackRepository;
         this.searchTrackRepository=searchTrackRepository;
     }

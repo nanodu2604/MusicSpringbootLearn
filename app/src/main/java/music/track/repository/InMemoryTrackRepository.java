@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import music.track.domain.Track;
 
-@Repository("memoryRepo")
+@Repository("memoryTrackRepo")
 public class InMemoryTrackRepository implements TrackRepository {
     private Map<String, Track>tracks=new HashMap<>();
     private Map<String, Set<String>> artistIndices=new HashMap<>();

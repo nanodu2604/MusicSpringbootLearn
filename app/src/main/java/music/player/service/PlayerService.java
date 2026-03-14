@@ -28,7 +28,7 @@ public class PlayerService {
 
     //Construction
     private final PlayerRepository playerRepository;
-    public PlayerService(@Qualifier("memoryRepo") PlayerRepository playerRepository){
+    public PlayerService(@Qualifier("memoryPlayerRepo") PlayerRepository playerRepository){
         this.playerRepository=playerRepository;
     }
 
