@@ -34,7 +34,7 @@ public class TrackController {
         List<TrackResponseDTO> ret=new ArrayList<>();
         List<Track> tracks=this.trackService.searchByTitle(keyword);
         for(Track track:tracks){
-            this.trackService.fromTrack(track);
+            ret.add(this.trackService.fromTrack(track));
         }
         return ret;
     }
