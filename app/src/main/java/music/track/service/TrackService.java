@@ -112,10 +112,12 @@ public class TrackService {
         return this.trackRepository.trackBatchRetrieval(ids);
     }
 
+    //TODO: Should raised error when Artist not found
     public List<Track> getTracksByArtist(String artist){
         return this.trackRepository.getTracksByArtist(artist);
     }
 
+    //TODO: Should raised error when genre not found
     public List<Track> getTracksByGenre(String genre){
         return this.trackRepository.getTracksByGenre(genre);
     }

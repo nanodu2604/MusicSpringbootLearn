@@ -1,9 +1,16 @@
 package music.player.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import music.player.domain.PlayerCommand;
 
 public class PlayerCommandDTO {
+    @NotBlank
     private String userId;
+
+    @NotBlank
     private PlayerCommand command;
+    
+    @PositiveOrZero
     private Integer position; 
     private String trackId; 
 

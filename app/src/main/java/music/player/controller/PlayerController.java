@@ -5,14 +5,15 @@ import music.player.dto.PlayerCommandDTO;
 import music.player.service.PlayerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 // import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 // import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.validation.Valid;
 
-
-
+@Validated
 @RestController
 @RequestMapping("/player")
 public class PlayerController {
@@ -25,7 +26,7 @@ public class PlayerController {
     }
 
     @PostMapping("/command")
-    public PlayerState applyCommand(@RequestBody PlayerCommandDTO commandDTO){
+    public PlayerState applyCommand(@Valid @RequestBody PlayerCommandDTO commandDTO){
         return playerService.applyCommand(commandDTO);
     }
 
