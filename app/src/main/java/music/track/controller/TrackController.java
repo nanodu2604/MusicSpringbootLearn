@@ -24,7 +24,7 @@ import music.track.domain.Track;
 
 @Validated
 @RestController
-@RequestMapping("/tracks")
+@RequestMapping("/tracks")  //track base path
 public class TrackController {
     @Autowired
     private TrackService trackService;
@@ -74,4 +74,7 @@ public class TrackController {
         return trackService.fromTrack(track);
     }
     
+
+    //TODO: Add the delete track endpoints
+    //TODO: Pagination track
 }

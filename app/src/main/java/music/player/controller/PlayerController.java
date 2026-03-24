@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/player")
+@RequestMapping("/players") //base path for player related endpoints
 public class PlayerController {
     @Autowired
     private PlayerService playerService;
