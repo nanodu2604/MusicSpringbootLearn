@@ -6,3 +6,5 @@ build
 
 #ignore the wraper too.
 !gradle-wraper.jar
+
+.devcontainer
