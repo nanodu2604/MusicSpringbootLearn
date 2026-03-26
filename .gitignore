@@ -8,3 +8,6 @@ build
 !gradle-wraper.jar
 
 .devcontainer
+
+#Ignore the .vscode directory
+.vscode
