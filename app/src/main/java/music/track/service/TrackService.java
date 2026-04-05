@@ -6,6 +6,7 @@ import music.track.dto.TrackUpdateDTO;
 import music.track.dto.TrackRequestDTO;
 import music.track.repository.SearchTrackRepository;
 import music.track.repository.TrackRepository;
+import music.track.exception.EmptyTracksException;
 import music.track.exception.SearchTrackNotFoundException;
 import music.track.exception.TrackNotFoundException;
 
@@ -112,14 +113,21 @@ public class TrackService {
         return this.trackRepository.trackBatchRetrieval(ids);
     }
 
-    //TODO: Should raised error when Artist not found
+    //TODO: for consistency, should be changed to match to search by title controller
     public List<Track> getTracksByArtist(String artist){
-        return this.trackRepository.getTracksByArtist(artist);
+        List <Track> tracks=this.trackRepository.getTracksByArtist(artist);
+        if (tracks.isEmpty()|| tracks==null){
+            throw new EmptyTracksException("artist search "+artist);
+        }
+        return tracks;
     }
 
-    //TODO: Should raised error when genre not found
     public List<Track> getTracksByGenre(String genre){
-        return this.trackRepository.getTracksByGenre(genre);
+        List<Track> tracks=this.trackRepository.getTracksByGenre(genre);
+        if(tracks.isEmpty()||tracks==null){
+            throw new EmptyTracksException("genre search "+genre);
+        }
+        return tracks;
     }
     public Track getTrackById(String trackId) {
         Track track=this.trackRepository.getTrackById(trackId);

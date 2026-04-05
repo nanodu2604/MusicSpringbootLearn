@@ -81,6 +81,12 @@ public class TrackController {
         trackService.deleteTrack(trackId);
     }
 
-    //TODO: Pagination track
-    
+    @GetMapping("/{trackId}")
+    public TrackResponseDTO getTrackById(@PathVariable String trackId){
+        Track track=trackService.getTrackById(trackId);
+        return trackService.fromTrack(track);
+    }
+
+        //TODO: Pagination track
+
 }

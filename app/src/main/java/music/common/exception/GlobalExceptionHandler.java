@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import music.player.exception.PlayerNotFoundException;
 import music.playlist.exception.PlaylistNotFoundException;
+import music.track.exception.EmptyTracksException;
 import music.track.exception.SearchTrackNotFoundException;
 import music.track.exception.TrackNotFoundException;
 
@@ -28,6 +29,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PlayerNotFoundException.class)
     public ResponseEntity<String> handlePlayerNotFound(PlayerNotFoundException e){
+        return ResponseEntity.status(404).body(e.getMessage());
+    }
+
+    @ExceptionHandler(EmptyTracksException.class)
+    public ResponseEntity<String> handleEmptyTracks(EmptyTracksException e){
         return ResponseEntity.status(404).body(e.getMessage());
     }
 }
