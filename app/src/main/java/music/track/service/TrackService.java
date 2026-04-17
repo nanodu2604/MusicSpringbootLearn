@@ -77,6 +77,9 @@ public class TrackService {
     //Update DTO
     public TrackResponseDTO updateTrack(String trackId,TrackUpdateDTO updateDTO){
         Track track=this.trackRepository.getTrackById(trackId);
+        if(track==null){
+            throw new TrackNotFoundException(trackId);
+        }
         if (updateDTO.getTitle() != null) {
             this.searchTrackRepository.removeTrack(trackId);
             track.setTrackTitle(updateDTO.getTitle());
@@ -98,7 +101,9 @@ public class TrackService {
             track.setReleaseDate(updateDTO.getReleaseDate());
         }
         Instant updatedAt=Instant.now();
-        track.setUpdatedAt(updatedAt);
+        if(updateDTO!=null){
+            track.setUpdatedAt(updatedAt);
+        }
         this.trackRepository.saveTrack(track);
         this.searchTrackRepository.indexTrack(track);
         return fromTrack(track);

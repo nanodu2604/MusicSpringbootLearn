@@ -2,6 +2,7 @@ package music.playlist.service;
 
 import music.playlist.domain.Playlist;
 import music.playlist.dto.PlaylistResponseDTO;
+import music.playlist.exception.EmptyPlaylistException;
 import music.playlist.exception.PlaylistNotFoundException;
 import music.playlist.repository.PlaylistRepository;
 import music.playlist.repository.SearchPlaylistRepository;
@@ -64,6 +65,10 @@ public class PlaylistService{
     } 
 
     public void deletePlaylist(String playlistId){
+        Playlist playlist=this.getPlaylistById(playlistId);
+        if(playlist==null){
+            throw new PlaylistNotFoundException(playlistId);
+        }
         this.playlistRepository.deletePlaylist(playlistId);
         this.searchPlaylistRepository.removePlaylist(playlistId);
     }
@@ -71,12 +76,18 @@ public class PlaylistService{
     //Search method
     public List<Playlist> searchPlaylistByName(String keyword){
         List<String> playlistIds=this.searchPlaylistRepository.searchPlaylistName(keyword);
+        if(playlistIds.isEmpty() || playlistIds==null){
+            throw new EmptyPlaylistException("playlist name "+keyword);
+        }
         return this.playlistRepository.playlistBatchRetrieval(playlistIds);
     }
     
     //Track functions
     public void addTrack(String playlistId, String trackId){
         Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
+        if(playlist==null){
+            throw new PlaylistNotFoundException(playlistId);
+        }
         HashSet<String> trackIds=playlist.getTrackIds();
         trackIds.add(trackId);
         playlist.setTrackIds(trackIds);
@@ -85,7 +96,11 @@ public class PlaylistService{
 
     public void removeTrack(String playlistId,String trackId){
         Playlist playlist=this.playlistRepository.getPlaylistById(playlistId);
+        if(playlist==null){
+            throw new PlaylistNotFoundException(playlistId);
+        }
         HashSet<String> trackIds=playlist.getTrackIds();
+        
         trackIds.remove(trackId);
         playlist.setTrackIds(trackIds);
         this.playlistRepository.savePlaylist(playlist);

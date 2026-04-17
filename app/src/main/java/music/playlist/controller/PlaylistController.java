@@ -35,7 +35,7 @@ public class PlaylistController {
     }
 
     @PostMapping("/")
-    public PlaylistResponseDTO createtPlaylist(@RequestParam(required = false) String playlistName){
+    public PlaylistResponseDTO createPlaylist(@RequestParam(required = false) String playlistName){
         Playlist playlist=(playlistName==null)?this.playlistService.createPlaylist():this.playlistService.createPlaylist(playlistName);
         PlaylistResponseDTO responseDTO=this.playlistService.fromPlaylist(playlist);
         return responseDTO;
@@ -47,6 +47,7 @@ public class PlaylistController {
         return this.playlistService.fromPlaylist(playlist);
     }
 
+    //TODO: Need to handle the search not found error
     @GetMapping("/search")
     public List<PlaylistResponseDTO> searchPlaylistByName(@RequestParam String keyword){
         List<PlaylistResponseDTO> responseDTOs=new ArrayList<>();
@@ -57,24 +58,30 @@ public class PlaylistController {
         return responseDTOs;
     }
 
+    //TODO: Should add return something
     @DeleteMapping("/{playlistId}")
      public void deletePlaylist(@PathVariable String playlistId){
          this.playlistService.deletePlaylist(playlistId);
     }
     
     //Do some track management endpoints: add,delete,get
+    //TODO: Should add the response
+    //TODO: Handle Track not found exception not return anything on json
     @PostMapping("/{playlistId}/tracks/")
     public void addTracks(@PathVariable String playlistId,@RequestBody List<String> trackIds){
         for(String trackId:trackIds){
             this.playlistService.addTrack(playlistId, trackId);
         }
     }
-
+    
+    //TODO: Delete should return something
+    //TODO: Must handle trackId not found
     @DeleteMapping("/{playlistId}/tracks/{trackId}")
     public void removeTrack(@PathVariable String playlistId,@PathVariable String trackId){
         this.playlistService.removeTrack(playlistId, trackId);
     }
 
+    //TODO: Should handle the track not found mercifully
     @GetMapping("/{playlistId}/tracks/")
     public HashSet<String> getTracks(@PathVariable String playlistId){
         return this.playlistService.loadTrackIds(playlistId);
